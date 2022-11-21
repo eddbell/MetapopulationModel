@@ -49,7 +49,7 @@ def DiversityGene(nsim,N,nu,h,m,g,pi):
     filename = f'0_{nu}_{h}_{pi}_{N}_{g}_diversity_gene.csv'
     data = open(filename,'w')
 
-    Nmax = int(3 * N / nu)
+    if nu != 0:  Nmax = int(N / nu)
     for y in range(nsim):
         pop = mod(N,nu)
         print(f"Simulation {y}\n")
@@ -62,7 +62,7 @@ def DiversityGene(nsim,N,nu,h,m,g,pi):
 
         pop.generateX()
         print("Introduction of the gene\n")
-        for k in range(int(Nmax/3)):
+        for k in range(int(Nmax)):
             pop.gene_model(h,g,pi)
             if k%int(N) == 0:
                 data.write(f"{pop.diversity(pop.X)},")
@@ -73,18 +73,19 @@ def DiversityGene(nsim,N,nu,h,m,g,pi):
     return
 
 #simulations with multiple gene model. OUTPUT: Diversity per generation
-def DiversityMultipleGene(nsim,N,nu,h,m,g,pi,w):
+def DiversityMultipleGene(nsim,N,nu,h,m,g,pi,w,NGI):
     print("------------------------------------\n")
     print("Simulation of multiple gene model.")
     print("------------------------------------\n")
-    filename = f'0_{nu}_{h}_{pi}_{N}_{w}_{g}_trend_multiple_gene.csv'
-    data = open(filename,'w')
-
+    
     p = 0   #triggered during the introduction of each gene.
     ngenerations = 0 #number of generations
     gene_count = 0  #numbers of differents genes
-    NGI = 4 #number of genes introduces
-    #w = int((2*np.log(N)/(h+m)+1/nu)/8)
+    
+    w = int((2*np.log(N)/(h+m)+1/nu)/8)
+    
+    filename = f'0_{nu}_{h}_{pi}_{N}_{w}_{g}_trend_multiple_gene.csv'
+    data = open(filename,'w')
 
     for y in range(nsim):
         print(f"Simulation {y+1} of {nsim} simulation(s)\n")
@@ -104,43 +105,6 @@ def DiversityMultipleGene(nsim,N,nu,h,m,g,pi,w):
                 p=0
         DeleteComma(data)
 
-        data.write("\n")
-    data.close()
-    print(filename)
-    return 0
-
-#simulations with multiple gene model. OUTPUT:  Diversity per frequency
-def DiversityMultipleGeneOnFrequency(nsim,N,nu,h,m,g,pi,w):
-    print("------------------------------------\n")
-    print("Execution of multiple gene model.")
-    print("------------------------------------\n")
-    filename = f'0_{nu}_{h}_{pi}_{N}_{w}_{g}_multiple_gene_on_freq.csv'
-    data = open(filename,'w')
-
-    p = 0   #triggered during the introduction of each gene.
-    ngenerations = 0 #number of generations
-    gene_count = 0  #numbers of differents genes
-    NGI = 20  #numbers of gene introduced
-
-    for y in range(nsim):
-        print(f"Simulation {y+1}\n")
-        pop = mod(N,nu)
-        pop.generateX()
-        for k in range(int(w*N*NGI)):
-
-            p,ngenerations,gene_count = pop.multiple_gene_model(h, pi,w,p,ngenerations,gene_count)
-            if k%int(N) == 0:
-                ngenerations = ngenerations + 1
-                if k%(w*N) == 0:
-                    o = np.random.randint(0,N)
-                    pop.gene_count = pop.gene_count + 1
-                    pop.X[1,o] = pop.gene_count
-                    pop.ngene = 1
-                    print(pop.gene_count,"-th gene of ", NGI)
-                    if k >= int(2*N/nu):	#in order to avoid bias
-                    	data.write(f"{pop.diversity(pop.X)},")
-                p=0
-        DeleteComma(data)
         data.write("\n")
     data.close()
     print(filename)
