@@ -57,8 +57,6 @@ Diversity per generation on HGT & Migration Model  1
 
 Diversity per generation on Multiple Gene Model  2
 
-Diversity per frequency on Multiple Gene Model  3
-
 
 Please insert number of the model: 0
 
@@ -70,7 +68,7 @@ It is possible to observe the numerical data of the simulation graphically by ca
 
 ```shell
 $ ./ExecutePlot.py 
-0_0.01_0.1_0_10000_w_-1_multiple_gene		 0
+0_0.01_0.1_0_10000_20_-1_multiple_gene		 0
 0_0.01_0.1_0_10000_500_-1_multiple_gene		 1
 Insert number of the file : 1
 ```
