@@ -5,17 +5,17 @@ a.a. 2021/22, Physics faculty
 Contents
 ========
 
- * [What](#What)
- * [Set parameters](#Set)
+ * [What is it?](#What is it)
+ * [Configuration](#Configuration)
  * [Run](#Run)
  * [Plot](#Plot)
 
-### What
+### What is it?
 
 Simulator of a meta-population of microorganisms shows the behaviour of biodiversity when a beneficial gene is spread.
 
 
-### Set parameters
+### Configuration
 
 The programme is initialised with preset parameters. It is advisable to modify the parameters to manage the execution time of the programme.
 The parameters required to execute the programme must be introduced during the execution of the code.
@@ -74,7 +74,7 @@ $ ./ExecutePlot.py
 0_0.01_0.1_0_10000_500_-1_multiple_gene		 1
 Insert number of the file : 1
 ```
-ps. The graph shows the performance of a realisation and the average of all simulations.
+ps. The graph shows the performance of a realisation and the average over all simulations.
 
 
 
