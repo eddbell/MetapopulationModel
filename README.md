@@ -45,7 +45,7 @@ optional arguments:
 ```
 
 ### Run
-To start the program, simply run `$ .\.Main.py` (or introducing the parameters) and then digit the number of the type of simulation you want to run:
+To start the program, simply run `$ .\Main.py` (if necessary defining the desired parameters) and then digit the number of the type of simulation you want to run:
 
 ```shell
 $ ./Main.py 
