@@ -19,11 +19,11 @@ Simulator of a meta-population of microorganisms shows the behaviour of biodiver
 
 The programme is initialised with preset parameters. It is advisable to modify the parameters to manage the execution time of the programme.
 The parameters required to execute the programme must be introduced during the execution of the code.
-To display the parameters, simply run `$ .\.Main.py -h`
+To display the parameters, simply run `$ .\Main.py -h`
 
 
 ```shell
-$ .\.Main.py -h
+$ .\Main.py -h
 
 usage: Main.py [-h] [-N N] [-nu NU] [-ht HT] [-g G] [-pi PI] [-nsim NSIM]
                [-c COMMAND] [-w W]
