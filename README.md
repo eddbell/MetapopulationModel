@@ -55,9 +55,9 @@ Diversity per generation on Neutral Model  0
 
 Diversity per generation on HGT & Migration Model  1
 
-Diversity per generation on Multple Gene Model  2
+Diversity per generation on Multiple Gene Model  2
 
-Diversity per frequency on Multple Gene Model  3
+Diversity per frequency on Multiple Gene Model  3
 
 
 Please insert number of the model: 0
