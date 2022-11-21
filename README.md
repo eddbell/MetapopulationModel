@@ -5,7 +5,7 @@ a.a. 2021/22, Physics faculty
 Contents
 ========
 
- * [What is it?](#What is it)
+ * [What is it?](#What)
  * [Configuration](#Configuration)
  * [Run](#Run)
  * [Plot](#Plot)
