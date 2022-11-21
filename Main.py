@@ -56,7 +56,9 @@ else: args.g = g
 print(args)
 
 if command == 0:
-    command = input("\nDiversity per generation on Neutral Model(0)\n\nDiversity per generation on HGT & Migration Model(1)\n\nDiversity per generation on Multple Gene Model(2)\n\nDiversity per frequency on Multple Gene Model(3)\n\n")
+    print("\nDiversity per generation on Neutral Model  0\n\nDiversity per generation on HGT & Migration Model  1\n\nDiversity per generation on Multple Gene Model  2\n\nDiversity per frequency on Multple Gene Model  3\n\n")
+    command = input("Please insert number of the model: ")
+
 print(f"PARAMETERS:\nN {N}, h {h},g {g},pi {pi}, w {w}, nu {nu}, nsim {nsim}")
 
 
