@@ -1,12 +1,8 @@
 #!/usr/bin/env python3
 import numpy as np, time
-import sys, argparse, signal
+import argparse
 
 from Function import DiversityNeutral, DiversityGene, DiversityMultipleGene
-
-def sgn(signal,frame):
-    sys.exit(0)
-signal.signal(signal.SIGINT,sgn)
 
 t0 = time.time()
 N = 10_000  #numbers of patches
@@ -17,8 +13,8 @@ h = 0.1 #probability Horizontal Gene Transfer
 pi = 0  #Spread probability of patches without gene
 m = 1-(h+pi)    #migration probability
 w = int((2*np.log(N)/(h+m)+1/nu))     #frequencies of gene introduction (in number of generations)
-NGI = 4
-command = 0
+NGI = 4     #Number of genes introduced
+command = 0     #number of the function called in Function.py
 
 parser = argparse.ArgumentParser(description="Model simulations")
 parser.add_argument("-N",help="Number of patches",type=int)

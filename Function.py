@@ -2,11 +2,10 @@ import numpy as np
 from Model import mod
 import os, signal, sys, csv
 
-#Deletes the simulations file if you stop the process (CTRL+D)
+#Deletes the simulations file if you stop the process (CTRL+C)
 def sgn(signal,frame):
     os.remove(filename)
     sys.exit(0)
-signal.signal(signal.SIGINT,sgn)
 
 #deletes the final comma in simulations
 def DeleteComma(data):
@@ -17,10 +16,14 @@ def DeleteComma(data):
 
 #simulation of neutral model. OUTPUT: diversity per generation
 def DiversityNeutral(nsim,N,nu):
-    print("------------------------------------\n")
+    print("\n------------------------------------")
     print("Execution neutral model")
     print("------------------------------------\n")
+
+    global filename
     filename = f'{N}_{nu}_{nsim}_neutral_model.csv'
+    signal.signal(signal.SIGINT,sgn)
+
     data = open(filename,'w')
     if nu != 0:  Nmax = int(3 * N / nu)
     for y in range(nsim):
@@ -46,7 +49,11 @@ def DiversityGene(nsim,N,nu,h,m,g,pi):
     print("\n------------------------------------")
     print("Simulation of HGT & migration model.")
     print("------------------------------------\n")
+
+    global filename
     filename = f'0_{nu}_{h}_{pi}_{N}_{g}_diversity_gene.csv'
+    signal.signal(signal.SIGINT,sgn)
+
     data = open(filename,'w')
 
     if nu != 0:  Nmax = int(N / nu)
@@ -74,17 +81,19 @@ def DiversityGene(nsim,N,nu,h,m,g,pi):
 
 #simulations with multiple gene model. OUTPUT: Diversity per generation
 def DiversityMultipleGene(nsim,N,nu,h,m,g,pi,w,NGI):
-    print("------------------------------------\n")
+
+    print("\n------------------------------------")
     print("Simulation of multiple gene model.")
     print("------------------------------------\n")
-    
+
     p = 0   #triggered during the introduction of each gene.
     ngenerations = 0 #number of generations
     gene_count = 0  #numbers of differents genes
-    
-    w = int((2*np.log(N)/(h+m)+1/nu)/8)
-    
+
+    global filename
     filename = f'0_{nu}_{h}_{pi}_{N}_{w}_{g}_trend_multiple_gene.csv'
+    signal.signal(signal.SIGINT,sgn)
+
     data = open(filename,'w')
 
     for y in range(nsim):
@@ -92,7 +101,7 @@ def DiversityMultipleGene(nsim,N,nu,h,m,g,pi,w,NGI):
         pop = mod(N,nu)
         pop.generateX()
         for k in range(int(w*N*NGI)):
-            p,ngenerations,gene_count = pop.multiple_gene_model(h, pi,w,p,ngenerations,gene_count)
+            p,ngenerations,gene_count = pop.multiple_gene_model(h,pi,w,p,ngenerations,gene_count)
             if k%int(N) == 0:
                 ngenerations = ngenerations + 1
                 if k%(w*N) == 0:
