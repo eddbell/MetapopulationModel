@@ -43,9 +43,7 @@ nomefile = []
 num = 0
 
 fig = plt.figure(figsize=(9,9))
-ax = fig.add_subplot(111)
-fig.subplots_adjust(hspace=0, wspace=0)
-ax.tick_params(axis='both', labelsize=20)
+ax = fig.add_subplot()
 
 dir_path = os.path.dirname(os.path.realpath(__file__))
 for f in os.listdir(dir_path):
