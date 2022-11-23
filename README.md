@@ -19,11 +19,11 @@ This GitHub repository contains the code for the simulation of sweeping benefici
 
 The program is initialised with preset parameters. It is advisable to modify the parameters to manage the execution time of the programme.
 The parameters required to execute the programme must be introduced during the execution of the code.
-To display the parameters, simply run `$ .\Main.py -h`
+To display the parameters, simply run `$ python3 Main.py -h`
 
 
 ```shell
-$ .\Main.py -h
+$ python3 Main.py -h
 
 usage: Main.py [-h] [-N N] [-nu NU] [-ht HT] [-g G] [-pi PI] [-nsim NSIM]
                [-c COMMAND] [-w W]
@@ -48,7 +48,7 @@ optional arguments:
 To start the program, simply run `$ .\Main.py` (if necessary defining the desired parameters) and then digit the number of the type of simulation you want to run:
 
 ```shell
-$ ./Main.py 
+$ python3 Main.py 
 Namespace(N=10000, nu=0.01, ht=0.1, g=-1, pi=0, nsim=1, command=None, w=500)
 
 Diversity per generation on Neutral Model  0
@@ -67,7 +67,7 @@ Please insert number of the model: 0
 It is possible to observe the numerical data of the simulation graphically by calling `$ ./ExecutePlot.py` and inserting the number of the file:
 
 ```shell
-$ ./ExecutePlot.py 
+$ python3 ExecutePlot.py 
 0_0.01_0.1_0_10000_20_-1_multiple_gene		 0
 0_0.01_0.1_0_10000_500_-1_multiple_gene		 1
 Insert number of the file : 1
