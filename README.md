@@ -1,6 +1,6 @@
-# MetapopulationModel
+# MetacommunityModel
 
-a.a. 2021/22, Physics faculty
+Edoardo Bella 20 Nov 2022
 
 Contents
 ========
@@ -12,12 +12,12 @@ Contents
 
 ### What is it?
 
-Simulator of a meta-population of microorganisms shows the behaviour of biodiversity when a beneficial gene is spread.
+This GitHub repository contains the code for the simulation of sweeping beneficial genes in a meta-community of microorganisms. The model investigates the behaviour of biodiversity when a beneficial gene is spread.
 
 
 ### Configuration
 
-The programme is initialised with preset parameters. It is advisable to modify the parameters to manage the execution time of the programme.
+The program is initialised with preset parameters. It is advisable to modify the parameters to manage the execution time of the programme.
 The parameters required to execute the programme must be introduced during the execution of the code.
 To display the parameters, simply run `$ .\Main.py -h`
 
@@ -72,7 +72,7 @@ $ ./ExecutePlot.py
 0_0.01_0.1_0_10000_500_-1_multiple_gene		 1
 Insert number of the file : 1
 ```
-ps. The graph shows the performance of a realisation and the average over all simulations.
+The plot shows the diversity vs time of a single realization and the average over all realizations.
 
 
 
