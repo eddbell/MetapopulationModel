@@ -23,9 +23,9 @@ parser.add_argument("-ht",help="Horizontal gene transfer rate",type=float)
 parser.add_argument("-g",help="Rate of the gene presence in the innovations, if g = -1 probability = gene density in the meta-population",type=float)
 parser.add_argument("-pi",help="Spread probability of patches without gene",type=float)
 parser.add_argument("-nsim",help="Number of simulations",type=int)
-parser.add_argument("-c","--command",help="Type of simulation")
 parser.add_argument("-w",help="Frequency of genes introduction")
 parser.add_argument("-NGI",help="Number of genes introduced")
+parser.add_argument("-c","--command",help="Type of simulation")
 args = parser.parse_args()
 
 if args.N != None:  N=args.N
