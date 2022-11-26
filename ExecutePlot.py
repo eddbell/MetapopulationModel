@@ -55,7 +55,7 @@ for f in os.listdir(dir_path):
 try:
     sys.argv[1]
 except:
-    num= input("Insert number of the file : ")
+    num= input("Insert the number of the file : ")
 else:
     num = sys.argv[1]
 
