@@ -17,10 +17,10 @@ def plot(num,nomefile):
     d = np.asarray([np.asarray([int(i) for i in j]) for j in d])
     file.close()
 
-    nsim = len(d)   #number of realization
+    nsim = len(d)   #number of the realizations
     print(d)
 
-    y_mean_single = []  #define average
+    y_mean_single = []  #define average array
     for i in d.T:
         y_mean_single.append(np.mean(i))
 
