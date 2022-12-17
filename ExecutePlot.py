@@ -17,24 +17,23 @@ def plot(num,nomefile):
     d = np.asarray([np.asarray([int(i) for i in j]) for j in d])
     file.close()
 
-    nsim = len(d)   #number of the realizations
+    nsim = len(d)   #number of realization
     print(d)
 
-    y_mean_single = []  #define average array
+    y_mean_single = []  #define average
     for i in d.T:
         y_mean_single.append(np.mean(i))
 
     ax.plot(d[0],linewidth=5,color="gray",alpha =  0.6, label="One realization")
     ax.plot(y_mean_single,linewidth=5,color="black",label=f"Average over {nsim} realizations")
-    
     ax.set_xlabel("Time (generations)");
     ax.set_ylabel("Diversity (S)")
+
     ax.tick_params(axis="both",which='major', width=1.0,direction = "in", labelsize=30)
     ax.tick_params(axis="both",which='major', length=10,direction = "in", labelsize=30)
     ax.yaxis.label.set_size(30)
     ax.xaxis.label.set_size(30)
     ax.legend(prop={'size': 20},frameon=False)
-    
     plt.savefig(f"{nomefile[int(num)]}.pdf")
     plt.show()
     return 0
@@ -55,7 +54,7 @@ for f in os.listdir(dir_path):
 try:
     sys.argv[1]
 except:
-    num= input("Insert the number of the file : ")
+    num= input("Insert number of the file : ")
 else:
     num = sys.argv[1]
 

@@ -10,6 +10,7 @@ class mod():
         self.X = self.generateX()     #generate one strain meta-population
         self.ngene = 0  #the numbers of genes in the meta-population of the last introducted gene.
         self.gene_count = 0     #numbers of differents genes
+        self.steps = 0     #numbers of steps (N steps = 1 generation)
 
     #define the array containing the species.
     #The meta-population is initaliazed with all the patches having the same specie.
@@ -102,25 +103,27 @@ class mod():
         return 0
 
     #Model with the introduction of multiple gene with frequency w generation
-    def multiple_gene_model(self,ph, pi,w,p,ngenerazioni,gene_count):
+    def multiple_gene_model(self,ph, pi,w):
         N = self.N
+        self.steps = self.steps+1
+
         def distrgene():
             u = np.random.uniform(0,1)
             g = self.ngene/self.N
             if u < g:
-                x = gene_count  #the innovation have a new gene
-                ce = 1  #the innovation have the gene
+                x = 1  #the innovation have a new gene
             else:
-                x = gene_count -1  #the innovation have an ancient gene
-                ce = 0  #the innovation don't have the gene
-            return x, ce
+                x = 0  #the innovation have an ancient gene
+            return x
+
         pm = 1 - ph - pi
 
         #If there is not any gene in the meta-population, we introduce one in a random patch
         if self.ngene == 0:
+            self.gene_count = self.gene_count + 1
+            self.ngene = self.ngene +1
             p1 = np.random.randint(0,N)
-            self.X[1,p1] = gene_count
-            self.ngene = self.ngene + 1
+            self.X[1,p1] = self.gene_count
 
         #We choose 2 random patches
         p1 = np.random.randint(0,N)
@@ -128,48 +131,45 @@ class mod():
         while p1==p2:
             p2 = np.random.randint(0,N)
 
-        #Every w generation we introduce a new gene in a random patch
-        #Because the w generation is N step long, we introduce the variable p which aims to introduce the gene just on the first step
-        if ngenerazioni%w == 0 and p == 0:
+        #at w generation we introduce a new gene in a random patch
+        if (self.steps/N)%w == 0.0:
+            for i in range(self.N):
+                self.X[1,i] = 0
             o = np.random.randint(0,N)
-            gene_count = gene_count + 1
-            self.X[1,o] = gene_count
+            self.gene_count = self.gene_count + 1
+            self.X[1,o] = 1
             self.ngene = 1
-            p = 1
+
         o = np.random.uniform(0,1)
         if o>self.nu:
             u = np.random.uniform(0,ph+pm+pi)
-            if self.X[1,p1] != gene_count and self.X[1,p2] == gene_count:
+            if self.X[1,p1] != 1 and self.X[1,p2] == 1:
                 if u<pm:    #CASE 1: Migration
                     self.X[:,p1] = self.X[:,p2]
                     self.ngene = self.ngene + 1
                 elif u<pm+ph:   #CASE 2: Horizontal Gene Transfer
-                    self.X[1,p1] = gene_count
+                    self.X[1,p1] = 1
                     self.ngene = self.ngene + 1
                 elif u<1:   #CASE 3: patches that don't have the gene spread
                     self.X[:,p2] = self.X[:,p1]
                     self.ngene = self.ngene - 1
-            elif self.X[1,p1] == gene_count and self.X[1,p2] != gene_count:
+            elif self.X[1,p1] == 1 and self.X[1,p2] != 1:
                 if u<pm:    #CASE 1: Migration
                     self.X[:,p2] = self.X[:,p1]
                     self.ngene = self.ngene + 1
-                elif u<pm+pi:   #CASE 2: Horizontal Gene Transfer
-                    self.X[:,p1] = self.X[:,p2]
-                    self.ngene = self.ngene - 1
-                elif u<1:   #CASE 3: patches that don't have the gene spread
-                    self.X[1,p2] = gene_count
+                elif u<pm+ph:   #CASE 2: Horizontal Gene Transfer
+                    self.X[1,p1] = 1
                     self.ngene = self.ngene + 1
+                elif u<1:   #CASE 3: patches that don't have the gene spread
+                    self.X[:,p2] = self.X[:,p1]
+                    self.ngene = self.ngene - 1
             elif self.X[1,p1] == self.X[1,p2]:
                 self.X[:,p1] = self.X[:,p2]
         else:#innovation
-            genesi, ce = distrgene()
-            if self.X[1,p1] == gene_count:
-                cera = 1
-            else:
-                cera = 0
-            self.ngene = self.ngene + ce - cera
-            self.X[:,p1] = [max(self.X[0])+1,genesi]
-        return p, ngenerazioni, gene_count
+            g = distrgene()
+            self.ngene = self.ngene + g - self.X[1,p1]
+            self.X[:,p1] = [max(self.X[0])+1,g]
+        return
 
     #compute the diversity of the meta-population
     def diversity(self, arr):
