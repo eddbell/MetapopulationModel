@@ -102,7 +102,7 @@ def DiversityMultipleGene(nsim,N,nu,h,m,g,pi,w0):
                 data.write(f"{pop.diversity(pop.X)},")
                 if k%int(w*N) == 0:
                     #data2.write(f"{k/N},")
-                    print(pop.gene_count,"-th gene   ; w = ",w)
+                    print(f"{pop.gene_count}-th gene   |  w = ",w)
                     w = GenFreq(w0,N,m,h)
 
         DeleteComma(data)
@@ -118,20 +118,23 @@ def DiversityMultipleGene(nsim,N,nu,h,m,g,pi,w0):
 def DiversityMultipleGenePerFrequency(nsim,N,nu,h,m,g,pi,w0):
 
     global filename
-    filename = f'{nu}_{h}_{pi}_{N}_{w0}_{g}_{nsim}_multiple_gene_per_frequency.csv'
+    filename = f'f_{nu}_{h}_{pi}_{N}_{w0}_{g}_{nsim}_multiple_gene_per_frequency.csv'
     signal.signal(signal.SIGINT,sgn)
 
     data = open(filename,'w')
     N_max = int(10*N / nu)
     S0 = -N*nu*np.log(nu)
+    w_list = (0.1, 0.5, 1, 3, 7, 10)
 
-    for f in (0.1, 0.5, 1, 3, 7, 10):
+    print("List of frequencies:  w = ",np.trunc(np.ones(len(w_list))*w0/w_list))
+    for f in w_list:
 
-        print("\n\nFrequency: w0: ",w0/f)
+        print(f"\n\nw = ",w0/f)
         for y in range(nsim):
             print("-------------------------------------")
             print(f"\nSimulation {y+1} of {nsim} simulation(s)\n")
             S = 0
+            Ns = 0
             w =GenFreq(w0/f,N,m,h)
 
             pop = mod(N,nu)
@@ -140,22 +143,21 @@ def DiversityMultipleGenePerFrequency(nsim,N,nu,h,m,g,pi,w0):
                 pop.multiple_gene_model(h,pi,w)
                 if k%int(N) == 0:   #every generation
                     if k%int(w*N) == 0:
-                        print(pop.gene_count,"-th gene   |  w = ",w)
+                        print(f"{pop.gene_count}-th gene   |  w = ",w)
                         w = GenFreq(w0/f,N,m,h)
-                        #Wait the diverisity is stabilized before to catch data
-                    if  k > int(N / nu):
+                    if  k > int(N / nu):    #Wait the diverisity is stabilized before to catch data
                         S = S + pop.diversity(pop.X)/S0
-            data.write(f"{S},")
-            if k > int(N / nu): DeleteComma(data)
-            data.write("\n")
+                        Ns = Ns +1;
+            data.write(f"{S/Ns},")
+        if k > int(N / nu): DeleteComma(data)
+        data.write("\n")
     data.close()
     print(filename)
 
 #extract frequency values from exponential pdf
 def GenFreq(w0,N,m,h):
-
     s = int(np.log(N)/(m+h))  #define very low w values threshore
     w = expon.rvs(loc=s, scale=w0, size=1)[0]
     while w == 0:   w = expon.rvs(loc=s, scale=w0, size=1)[0]
-    #w = int(w0)
+
     return int(w)

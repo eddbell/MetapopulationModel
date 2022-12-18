@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
-import numpy as np, time
-import argparse
-
+import numpy as np
+import time, argparse
 from Function import DiversityNeutral, DiversityGene, DiversityMultipleGene, DiversityMultipleGenePerFrequency
 
 t0 = time.time()
@@ -61,28 +60,31 @@ print("\n#######################################################################
 
 #simulations of a meta-population WITHOUT introduction of a gene. OUTPUT: Diversity per generation
 if  int(command) == 1:
+    print("EXECUTION NEUTRAL MODEL.\n\nOUTPUT:\nDiversity (S) per generations.")
+    print(f"\nPARAMETERS:\nN {N}, h {h},g {g},pi {pi}, w0 {w0}, nu {nu}, nsim {nsim}\n")
+    print("\n##################################################################################################\n")
     DiversityNeutral(nsim,N,nu)
-    print("Execution neutral model.    OUTPUT: Diversity (S) per generations.")
 
 #simulations of a meta-population WITH introduction of a gene. OUTPUT: Diversity per generation
 elif int(command) == 2:
-    DiversityGene(nsim,N,nu,h,m,g,pi)
-    print("Simulation of HGT & migration model.    OUTPUT: Diversity (S) per generations.")
 
+    print("EXECUTION HGT & MIGRATION MODEL.\n\nOUTPUT:\nDiversity (S) per generations.")
+    print(f"\nPARAMETERS:\nN {N}, h {h},g {g},pi {pi}, w0 {w0}, nu {nu}, nsim {nsim}\n")
+    print("\n##################################################################################################\n")
+    DiversityGene(nsim,N,nu,h,m,g,pi)
 #simulations with multiple gene model. OUTPUT: Diversity per generation
 elif int(command) == 3:
-    DiversityMultipleGene(nsim,N,nu,h,m,g,pi,w0)
-    print("Simulation of multiple gene model.    OUTPUT: Diversity (S) per generations.")
 
+    print("EXECUTION MULTIPLE GENE MODEL.\n\nOUTPUT:\nDiversity (S) per generations.")
+    print(f"\nPARAMETERS:\nN {N}, h {h},g {g},pi {pi}, w0 {w0}, nu {nu}, nsim {nsim}\n")
+    print("\n##################################################################################################\n")
+    DiversityMultipleGene(nsim,N,nu,h,m,g,pi,w0)
 #simulations with multiple gene model. OUTPUT: Diversity per generation
 elif int(command) == 4:
+
+    print("EXECUTION MULTIPLE GENE MODEL.\n\nOUTPUT:\nMean diversity (S) over neutral diversity (S0) per w.")
+    print(f"\nPARAMETERS:\nN {N}, h {h},g {g},pi {pi}, w0 {w0}, nu {nu}, nsim {nsim}\n")
+    print("\n##################################################################################################\n")
     DiversityMultipleGenePerFrequency(nsim,N,nu,h,m,g,pi,w0)
-    print("Simulation of multiple gene model.    OUTPUT: mean diversity (S) over neutral diversity (S0) per w.")
-
-
-print(f"PARAMETERS:\nN {N}, h {h},g {g},pi {pi}, w0 {w0}, nu {nu}, nsim {nsim}\n")
-
-print("\n##################################################################################################\n")
-
 #print time of execution
-print("execution time = ",time.time()-t0)
+print("Execution time = ",time.time()-t0)
