@@ -13,6 +13,7 @@ pi = 0  #Spread probability of patches that don't have the gene
 m = 1-(h+pi)    #migration probability
 w0 = int((2*np.log(N)/(h+m)+1/nu))     #frequencies of gene introduction (in number of generations)
 command = 0     #number of the function called in Function.py
+NGI = 25
 
 parser = argparse.ArgumentParser(description="Model simulations")
 parser.add_argument("-N",help="Number of patches",type=int)
@@ -23,6 +24,7 @@ parser.add_argument("-pi",help="Spread probability of patches without gene",type
 parser.add_argument("-nsim",help="Number of simulations",type=int)
 parser.add_argument("-c","--command",help="Type of simulation")
 parser.add_argument("-w0",help="Frequency of genes introduction")
+parser.add_argument("-NGI",help="Number of genes introduction")
 args = parser.parse_args()
 
 if args.N != None:  N=args.N
@@ -39,6 +41,9 @@ else:   args.pi = pi
 
 if args.nsim != None: nsim=args.nsim
 else:   args.nsim = nsim
+
+if args.NGI != None: NGI=int(args.NGI)
+else:   args.NGI = NGI
 
 if args.w0 != None: w0=int(w0/float(args.w0))
 else:   args.w0 = w0
@@ -85,6 +90,6 @@ elif int(command) == 4:
     print("EXECUTION MULTIPLE GENE MODEL.\n\nOUTPUT:\nMean diversity (S) over neutral diversity (S0) per w.")
     print(f"\nPARAMETERS:\nN {N}, h {h},g {g},pi {pi}, w0 {w0}, nu {nu}, nsim {nsim}\n")
     print("\n##################################################################################################\n")
-    DiversityMultipleGenePerFrequency(nsim,N,nu,h,m,g,pi,w0)
+    DiversityMultipleGenePerFrequency(nsim,N,nu,h,m,g,pi,w0,NGI)
 #print time of execution
 print("Execution time = ",time.time()-t0)
