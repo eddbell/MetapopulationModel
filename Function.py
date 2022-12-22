@@ -15,7 +15,7 @@ def DeleteComma(data):
     data.truncate(size-1)
     return 0
 
-#change name of the file
+#change name of the file if it already exist.
 def ChangeName(nomefile):
     dir_path = os.path.dirname(os.path.realpath(__file__))
     path = dir_path+f"/{nomefile}"
@@ -94,7 +94,7 @@ def DiversityGene(nsim,N,nu,h,m,g,pi):
     return
 
 #simulations with multiple gene model. OUTPUT: Diversity per generation
-def DiversityMultipleGene(nsim,N,nu,h,m,g,pi,w0):
+def DiversityMultipleGene(nsim,N,nu,h,m,g,pi,w0,NGI):
 
     global filename
     filename = f'{nu}_{h}_{pi}_{N}_{w0}_{g}_{nsim}_multiple_gene+0'
@@ -102,10 +102,9 @@ def DiversityMultipleGene(nsim,N,nu,h,m,g,pi,w0):
     #filename2 = f'0_{nu}_{h}_{pi}_{N}_{w0}_{g}_{nsim}_gene_print.csv'
     signal.signal(signal.SIGINT,sgn)
 
-    NGI = 25
-    N_max = int(50*N / nu)
     data = open(filename,'w')
     #data2 = open(filename2,'w')
+    S0 = -N*nu*np.log(nu)
 
     for y in range(nsim):
         print("-------------------------------------")
@@ -116,8 +115,7 @@ def DiversityMultipleGene(nsim,N,nu,h,m,g,pi,w0):
         pop.generateX()
 
         k = 0
-        print(NGI)
-        while(pop.gene_count < NGI):
+        while(pop.gene_count < NGI+1):
             pop.multiple_gene_model(h,pi,w)
             if k%int(N) == 0:   #every generation
                 #data.write(f"{pop.diversity(pop.X)},")
@@ -125,7 +123,7 @@ def DiversityMultipleGene(nsim,N,nu,h,m,g,pi,w0):
                     #data2.write(f"{k/N},")
                     print(f"{pop.gene_count}-th gene   |  w = ",w)
                     w = GenFreq(w0,N,m,h)
-                    data.write(f"{pop.diversity(pop.X)},")
+                data.write(f"{pop.diversity(pop.X)},")
             k = k+1
         DeleteComma(data)
         data.write("\n")
@@ -141,26 +139,24 @@ def DiversityMultipleGenePerFrequency(nsim,N,nu,h,m,g,pi,w0,NGI):
 
 
     global filename
-    filename = f'2_{nu}_{h}_{pi}_{N}_{w0}_{g}_{nsim}_multiple_gene_per_frequency+0'
+    filename = f'max{nu}_{h}_{pi}_{N}_{w0}_{g}_{nsim}_multiple_gene_per_frequency+0'
     filename = ChangeName(filename)
     signal.signal(signal.SIGINT,sgn)
 
     data = open(filename,'w')
-    N_max = int(10*N / nu)
     S0 = -N*nu*np.log(nu)
-
     w_list = (0.1, 0.5, 1, 3, 7, 10)
 
     print("List of frequencies:  w = ",np.trunc(np.ones(len(w_list))*w0/w_list))
     for f in w_list:
-        print("\nNumber of genes per simulation:",NGI)
         print(f"\n\nw = ",w0/f)
         for y in range(nsim):
             print("-------------------------------------")
             print(f"\nSimulation {y+1} of {nsim} simulation(s)\n")
             S = 0
             Ns = 0
-            w =GenFreq(w0/f,N,m,h)
+            w1 = w0/f
+            w =GenFreq(w1,N,m,h)
 
             pop = mod(N,nu)
             pop.generateX()
@@ -169,19 +165,20 @@ def DiversityMultipleGenePerFrequency(nsim,N,nu,h,m,g,pi,w0,NGI):
             for k in range(int(N/nu)):
                 pop.neutral_model()
             pop.rename_species()
-
             pop.generateX()
+
             k = 0
-            while(pop.gene_count < NGI):
+            while(pop.gene_count < NGI+1):
                 pop.multiple_gene_model(h,pi,w)
                 if k%int(N) == 0:   #every generation
                     if k%int(w*N) == 0:
                         print(f"{pop.gene_count}-th gene   |  w = ",w)
-                        w = GenFreq(w0/f,N,m,h)
-                        S = S + pop.diversity(pop.X)/S0
+                        w = GenFreq(w1,N,m,h)
+                        S = S + pop.diversity(pop.X)
                         Ns = Ns+1;
                 k = k+1
-            data.write(f"{trunc(S/Ns,5)},")
+            data.write(f"{S/Ns/S0},")
+            print(S/Ns/S0)
         DeleteComma(data)
         data.write("\n")
     data.close()
