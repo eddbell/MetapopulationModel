@@ -13,7 +13,7 @@ pi = 0  #Spread probability of patches that don't have the gene
 m = 1-(h+pi)    #migration probability
 w0 = int((2*np.log(N)/(h+m)+1/nu))     #frequencies of gene introduction (in number of generations)
 command = 0     #number of the function called in Function.py
-NGI = 10    #Number of genes introduced
+NGI = 10    #Number of introduced genes
 
 parser = argparse.ArgumentParser(description="Model simulations")
 parser.add_argument("-N",help="Number of patches",type=int)
