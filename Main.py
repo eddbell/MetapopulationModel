@@ -13,7 +13,7 @@ pi = 0  #Spread probability of patches that don't have the gene
 m = 1-(h+pi)    #migration probability
 w0 = int((2*np.log(N)/(h+m)+1/nu))     #frequencies of gene introduction (in number of generations)
 command = 0     #number of the function called in Function.py
-NGI = 10    #Number of introduced genes
+NGI = 10    #Number of genes introduced
 
 parser = argparse.ArgumentParser(description="Model simulations")
 parser.add_argument("-N",help="Number of patches",type=int)
@@ -22,9 +22,9 @@ parser.add_argument("-ht",help="Horizontal gene transfer rate",type=float)
 parser.add_argument("-g",help="Rate of the gene presence in the innovations, if g = -1 probability = gene density in the meta-population",type=float)
 parser.add_argument("-pi",help="Spread probability of patches without gene",type=float)
 parser.add_argument("-nsim",help="Number of simulations",type=int)
-parser.add_argument("-c","--command",help="Type of simulation")
+parser.add_argument("-c","--command",help="Number of the model.")
 parser.add_argument("-w0",help="Frequency of genes introduction")
-parser.add_argument("-NGI",help="Number of genes introduction")
+parser.add_argument("-NGI",help="Number of gene introduced")
 args = parser.parse_args()
 
 if args.N != None:  N=args.N
