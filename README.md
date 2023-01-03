@@ -26,7 +26,7 @@ To display the parameters, simply run `$ python3 Main.py -h`
 $ python3 Main.py -h
 
 usage: Main.py [-h] [-N N] [-nu NU] [-ht HT] [-g G] [-pi PI] [-nsim NSIM]
-               [-c COMMAND] [-w W]
+               [-c COMMAND] [-w0 W0] [-NGI NGI]
 
 Model simulations
 
@@ -41,7 +41,8 @@ optional arguments:
   -nsim NSIM            Number of simulations
   -c COMMAND, --command COMMAND
                         Type of simulation
-  -w W                  Frequency of gene introduction
+  -w0 W0                Frequency of genes introduction
+  -NGI NGI              Number of introduced genes
 ```
 
 ### Run
