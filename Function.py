@@ -99,11 +99,9 @@ def DiversityMultipleGene(nsim,N,nu,h,m,g,pi,w0,NGI):
     global filename
     filename = f'{nu}_{h}_{pi}_{N}_{w0}_{g}_{nsim}_multiple_gene+0'
     filename = ChangeName(filename)
-    #filename2 = f'0_{nu}_{h}_{pi}_{N}_{w0}_{g}_{nsim}_gene_print.csv'
     signal.signal(signal.SIGINT,sgn)
 
     data = open(filename,'w')
-    #data2 = open(filename2,'w')
     S0 = -N*nu*np.log(nu)
 
     for y in range(nsim):
@@ -118,21 +116,15 @@ def DiversityMultipleGene(nsim,N,nu,h,m,g,pi,w0,NGI):
         while(pop.gene_count < NGI+1):
             pop.multiple_gene_model(h,pi,w)
             if k%int(N) == 0:   #every generation
-                #data.write(f"{pop.diversity(pop.X)},")
                 if k%int(w*N) == 0:
-                    #data2.write(f"{k/N},")
                     print(f"{pop.gene_count}-th gene   |  w = ",w)
                     w = GenFreq(w0,N,m,h)
                 data.write(f"{pop.diversity(pop.X)},")
             k = k+1
         DeleteComma(data)
         data.write("\n")
-        #DeleteComma(data2)
-        #data2.write("\n")
     data.close()
-    #data2.close()
     print(filename)
-    #print(filename2)
 
 #simulations with multiple gene model. OUTPUT: Diversity per w
 def DiversityMultipleGenePerFrequency(nsim,N,nu,h,m,g,pi,w0,NGI):
@@ -174,8 +166,8 @@ def DiversityMultipleGenePerFrequency(nsim,N,nu,h,m,g,pi,w0,NGI):
                     if k%int(w*N) == 0:
                         print(f"{pop.gene_count}-th gene   |  w = ",w)
                         w = GenFreq(w1,N,m,h)
-                        S = S + pop.diversity(pop.X)
-                        Ns = Ns+1;
+                    S = S + pop.diversity(pop.X)
+                    Ns = Ns+1;
                 k = k+1
             data.write(f"{S/Ns/S0},")
             print(S/Ns/S0)
