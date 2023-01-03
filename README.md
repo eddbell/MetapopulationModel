@@ -65,10 +65,10 @@ Please insert number of the model: 0
 
 
 ### Plot
-It is possible to observe the numerical data of the simulation graphically by calling `$ ./ExecutePlot.py` and inserting the number of the file:
+It is possible to observe the numerical data of the simulation graphically by calling `$ python3 Plot.py` and inserting the number of the file:
 
 ```shell
-$ python3 ExecutePlot.py 
+$ python3 Plot.py 
 0_0.01_0.1_0_10000_20_-1_multiple_gene		 0
 0_0.01_0.1_0_10000_500_-1_multiple_gene		 1
 Insert number of the file : 1
